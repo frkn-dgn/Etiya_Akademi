@@ -21,9 +21,9 @@ public class OrderDetails {
     private int id;
 
     @Column(name = "total")
-    private double total;
+    private Double total;
 
-    @Column(name = "coupon")
+    @Column(name = "coupon",nullable = true)
     private String coupon;
 
     @ManyToOne

@@ -7,8 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<Users,Integer> {
+
+
+    @Query("Select u from Users u WHERE first_name=:name")
+    Users findByUserName(String name);
+
+
     List<Users> findByEmail(String email);
 
-    @Query("Select u from Users as u WHERE first_name=:name")
-    Users findByFirstName(String name);
+//    @Query("Select u from User as u WHERE first_name=:name")
+//    Users findByFirst_name(String name);
 }
+

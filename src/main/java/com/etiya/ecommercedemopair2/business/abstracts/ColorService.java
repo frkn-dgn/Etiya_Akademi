@@ -7,8 +7,8 @@ import com.etiya.ecommercedemopair2.entities.concretes.Color;
 import java.util.List;
 
 public interface ColorService {
-    List<Color> getAll();
-
-    Color getById(int id);
     AddColorResponse addColor(AddColorRequest addColorRequest);
+    Color getById(int id);
+
+
 }

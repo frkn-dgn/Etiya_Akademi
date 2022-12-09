@@ -43,12 +43,12 @@ public class Users {
 
     @ManyToOne
     @JoinColumn(name = "address_id")
-    @JsonIgnoreProperties("users")
+    @JsonIgnoreProperties("address")
     private Address address;
 
     @OneToMany(mappedBy = "id")
-   @JsonIgnoreProperties("id")
-    private List<Salesman> salesmen;
+    @JsonIgnoreProperties("id")
+    private List<Salesman> salesman;
 
     @OneToMany(mappedBy = "id")
     @JsonIgnoreProperties("id")

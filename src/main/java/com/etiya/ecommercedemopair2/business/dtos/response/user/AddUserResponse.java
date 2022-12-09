@@ -18,6 +18,7 @@ public class AddUserResponse {
     private String phone_number;
     private String email;
     private String password;
+    private int address_id;
     private Date birth_date;
 
 }

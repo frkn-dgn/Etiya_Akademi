@@ -22,6 +22,9 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "payment_id")
+    private int payment_id;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties("customer")

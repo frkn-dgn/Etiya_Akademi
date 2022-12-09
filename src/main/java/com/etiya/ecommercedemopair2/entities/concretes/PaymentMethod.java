@@ -24,8 +24,7 @@ public class PaymentMethod {
     @Column(name = "name")
     private String name;
 
-
-//    @OneToMany(mappedBy = "id")
-//    @JsonIgnoreProperties("id")
-//    private List<Orders> order;
+   @OneToMany(mappedBy = "paymentMethod")
+   @JsonIgnoreProperties("id")
+   private List<Orders> order;
 }

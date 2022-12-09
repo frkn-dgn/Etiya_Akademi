@@ -25,6 +25,6 @@ public class District {
     private String district_name;
 
     @OneToMany(mappedBy = "id")
-   @JsonIgnoreProperties("id")
-   private List<City> cities;
+    @JsonIgnoreProperties("id")
+    private List<City> cities;
 }

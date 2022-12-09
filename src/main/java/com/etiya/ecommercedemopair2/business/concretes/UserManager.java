@@ -1,21 +1,34 @@
 package com.etiya.ecommercedemopair2.business.concretes;
 
+import com.etiya.ecommercedemopair2.business.abstracts.AddressService;
 import com.etiya.ecommercedemopair2.business.abstracts.UserService;
 import com.etiya.ecommercedemopair2.business.dtos.request.user.AddUserRequest;
 import com.etiya.ecommercedemopair2.business.dtos.response.user.AddUserResponse;
+import com.etiya.ecommercedemopair2.core.util.mapping.ModelMapperService;
+import com.etiya.ecommercedemopair2.entities.concretes.Address;
 import com.etiya.ecommercedemopair2.entities.concretes.Users;
+import com.etiya.ecommercedemopair2.repository.abstracts.AddressRepository;
 import com.etiya.ecommercedemopair2.repository.abstracts.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
-public class UserManager implements UserService {
+public class UserManager implements UserService{
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private ModelMapperService modelMapperService;
+
     @Override
     public List<Users> getAll() {
         return userRepository.findAll();
@@ -32,22 +45,26 @@ public class UserManager implements UserService {
     }
 
     @Override
+    public Users getByFirst_name(String name) {
+        return userRepository.findByUserName(name);
+    }
+    @Override
     public Users getByFirstname(String name) {
-        return userRepository.findByFirstName(name);
+        return userRepository.findByUserName(name);
     }
 
     @Override
     public AddUserResponse addUser(AddUserRequest addUserRequest) {
-        Users users = new Users();
+        Users user=modelMapperService.getMapper().map(addUserRequest,Users.class);
 
-        users.setFirst_name(addUserRequest.getFirst_name());
-
-
-        Users savedUser = userRepository.save(users);
+        Users savedUser = userRepository.save(user);
 
         AddUserResponse response =
-                new AddUserResponse(savedUser.getId(),savedUser.getFirst_name(),savedUser.getLast_name(),
-                        savedUser.getPhone_number(), savedUser.getEmail(),savedUser.getPassword(),savedUser.getBirth_date());
+                modelMapperService.getMapper().map(savedUser,AddUserResponse.class);
         return response;
+    }
+         private Address checkIfAddressExistsById(int address_id) {
+        Address currentAddress = this.addressRepository.findById(address_id).orElseThrow();
+        return currentAddress;
     }
 }
